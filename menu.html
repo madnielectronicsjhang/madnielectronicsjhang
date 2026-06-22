@@ -12,6 +12,7 @@
       --primary: #2563eb;
       --secondary: #f59e0b;
       --bg-dark: #080b12;
+      --bg-card: rgba(255,255,255,0.04);
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -23,25 +24,25 @@
     body::-webkit-scrollbar-track { background: var(--bg-dark); }
     body::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-    .menu-header {
+    .products-header {
       text-align: center;
-      padding: 3rem 5% 1.5rem;
+      padding: 2.5rem 5% 1.2rem;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .menu-header h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+    .products-header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
       font-weight: 900;
       color: #fff;
     }
-    .menu-header h1 span {
+    .products-header h1 span {
       background: linear-gradient(135deg, var(--primary), #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .menu-header p {
+    .products-header p {
       color: rgba(255,255,255,0.4);
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      font-size: 0.85rem;
     }
     .back-link {
       display: inline-flex;
@@ -49,201 +50,445 @@
       gap: 0.4rem;
       color: rgba(255,255,255,0.4);
       text-decoration: none;
-      font-size: 0.85rem;
-      margin-top: 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
       transition: 0.3s;
     }
     .back-link:hover { color: #fff; }
 
-    .menu-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      padding: 1.5rem 5%;
+    .controls-bar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(8,11,18,0.9);
+      background: rgba(8,11,18,0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 0.8rem 5%;
     }
-    .menu-tab {
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(37, 99, 235, 0.2);
+    .controls-inner {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .search-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.25);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: #eee;
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+      transition: 0.3s;
+    }
+    .search-wrap input:focus {
+      border-color: rgba(37, 99, 235, 0.4);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .search-wrap input::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sort-wrap label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+    .sort-wrap select {
+      padding: 0.5rem 2rem 0.5rem 1rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='rgba(255,255,255,0.3)'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      transition: 0.3s;
+    }
+    .sort-wrap select:focus {
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+    .sort-wrap select option {
+      background: #1a1d2e;
+      color: #eee;
+    }
+
+    .results-info {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      white-space: nowrap;
+    }
+
+    /* tabs below controls */
+    .cat-tabs {
+      display: flex;
+      gap: 0.4rem;
+      padding: 0.8rem 5% 0.4rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cat-tabs::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(37, 99, 235, 0.15);
       background: rgba(255,255,255,0.02);
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.45);
       border-radius: 30px;
       cursor: pointer;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
       transition: all 0.3s ease;
       font-family: inherit;
+      white-space: nowrap;
     }
-    .menu-tab:hover {
-      border-color: rgba(37, 99, 235, 0.4);
+    .cat-tab:hover {
+      border-color: rgba(37, 99, 235, 0.3);
       color: #fff;
     }
-    .menu-tab.active {
+    .cat-tab.active {
       background: linear-gradient(135deg, var(--primary), #3b82f6);
       border-color: transparent;
       color: #fff;
-      box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
     }
 
-    .menu-section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 5% 4rem;
+    .products-grid {
+      max-width: 1100px;
+      margin: 1rem auto;
+      padding: 0 5% 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem;
     }
-    .menu-category {
-      display: none;
+
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: cardIn 0.4s ease forwards;
     }
-    .menu-category.active {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .cat-header {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+    .product-card:hover {
+      border-color: rgba(37, 99, 235, 0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
-    .cat-header h2 {
-      font-size: 1.4rem;
+    .product-card.hidden {
+      display: none;
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      background: rgba(255,255,255,0.03);
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 0.8rem 1rem 1rem;
+    }
+    .product-cat-badge {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--secondary);
+      margin-bottom: 0.3rem;
+      opacity: 0.6;
+    }
+    .product-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #ddd;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-price {
+      font-size: 0.95rem;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary);
     }
-    .cat-header span { font-size: 1.3rem; }
-    .cat-header .count {
-      margin-left: auto;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+    .no-results p {
+      font-size: 0.9rem;
     }
 
-    .menu-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      padding: 0.7rem 1rem;
-      background: rgba(255,255,255,0.02);
-      border-radius: 8px;
-      border-left: 2px solid transparent;
-      transition: all 0.3s ease;
-      margin-bottom: 0.5rem;
-    }
-    .menu-item:hover {
-      background: rgba(37, 99, 235, 0.05);
-      border-left-color: var(--primary);
-    }
-    .menu-item .name { flex: 1; font-weight: 500; font-size: 0.9rem; color: #ddd; }
-    .menu-item .dots {
-      flex: 1;
-      min-width: 20px;
-      margin: 0 0.8rem;
-      border-bottom: 1px dotted rgba(255,255,255,0.1);
-    }
-    .menu-item .price { font-weight: 700; color: var(--primary); font-size: 0.9rem; white-space: nowrap; }
-    .menu-item .desc { width: 100%; font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 0.3rem; }
-
-    .menu-footer {
+    .products-footer {
       text-align: center;
       padding: 2rem;
       border-top: 1px solid rgba(255,255,255,0.04);
     }
-    .menu-footer a {
+    .products-footer a {
       color: rgba(255,255,255,0.4);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       transition: 0.3s;
     }
-    .menu-footer a:hover { color: #fff; }
+    .products-footer a:hover { color: #fff; }
+
+    @media (max-width: 600px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+      .controls-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .sort-wrap {
+        justify-content: space-between;
+      }
+      .results-info {
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
 
-<div class="menu-header">
+<div class="products-header">
   <h1>Our <span>Products</span></h1>
-  <p>Quality electronics — fair prices, trusted service</p>
+  <p>Browse our full range — quality electronics at fair prices</p>
   <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
 </div>
 
-<div class="menu-tabs" id="menuTabs">
-  <button class="menu-tab active" data-cat="appliances">📺 Home Appliances</button>
-  <button class="menu-tab" data-cat="mobile">📱 Mobile Accessories</button>
-  <button class="menu-tab" data-cat="electrical">🔌 Electrical Items</button>
-  <button class="menu-tab" data-cat="computer">💻 Computer Accessories</button>
-  <button class="menu-tab" data-cat="cooling">🌀 Cooling & Heating</button>
-  <button class="menu-tab" data-cat="repair">🔧 Repair Services</button>
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search products..." />
+    </div>
+    <div class="sort-wrap">
+      <label>Sort:</label>
+      <select id="sortSelect">
+        <option value="name-asc">Name A-Z</option>
+        <option value="name-desc">Name Z-A</option>
+        <option value="price-asc">Price Low</option>
+        <option value="price-desc">Price High</option>
+      </select>
+    </div>
+    <span class="results-info" id="resultsInfo">0 items</span>
+  </div>
 </div>
 
-<div class="menu-section" id="menuSection"></div>
+<div class="cat-tabs" id="catTabs">
+  <button class="cat-tab active" data-cat="all">All</button>
+  <button class="cat-tab" data-cat="appliances">📺 Appliances</button>
+  <button class="cat-tab" data-cat="mobile">📱 Mobile</button>
+  <button class="cat-tab" data-cat="electrical">🔌 Electrical</button>
+  <button class="cat-tab" data-cat="computer">💻 Computer</button>
+  <button class="cat-tab" data-cat="cooling">🌀 Cooling</button>
+  <button class="cat-tab" data-cat="repair">🔧 Repair</button>
+</div>
 
-<div class="menu-footer">
+<div class="products-grid" id="productsGrid"></div>
+
+<div class="products-footer">
   <a href="index.html">← Back to Madni Electronics</a>
 </div>
 
 <script>
-  const menuData = {
-    appliances: { icon: '📺', name: 'Home Appliances', items: [
-      ['LED TV 32 Inch', 'Rs 32,000'], ['LED TV 43 Inch', 'Rs 55,000'], ['LED TV 55 Inch', 'Rs 85,000'], ['Electric Iron', 'Rs 1,500'], ['Steam Iron', 'Rs 2,500'], ['Microwave Oven', 'Rs 18,000'], ['Electric Kettle', 'Rs 1,800'], ['Toaster', 'Rs 3,000'], ['Blender/Juicer', 'Rs 4,500'], ['Vacuum Cleaner', 'Rs 12,000'], ['Rice Cooker', 'Rs 5,500'], ['Electric Heater', 'Rs 6,000']
-    ]},
-    mobile: { icon: '📱', name: 'Mobile Accessories', items: [
-      ['Mobile Charger (Original)', 'Rs 500'], ['Fast Charger', 'Rs 1,200'], ['Wireless Charger', 'Rs 2,500'], ['Bluetooth Earphones', 'Rs 1,800'], ['Wired Earphones', 'Rs 400'], ['Power Bank 10,000mAh', 'Rs 2,500'], ['Power Bank 20,000mAh', 'Rs 4,500'], ['Mobile Cover (Simple)', 'Rs 250'], ['Mobile Cover (Premium)', 'Rs 800'], ['Screen Guard (Tempered)', 'Rs 300'], ['USB Data Cable', 'Rs 200'], ['Selfie Stick', 'Rs 600'], ['Mobile Stand', 'Rs 500'], ['Car Mobile Holder', 'Rs 800']
-    ]},
-    electrical: { icon: '🔌', name: 'Electrical Items', items: [
-      ['Switches (Pia)', 'Rs 120'], ['Sockets', 'Rs 150'], ['Extension Cord 3m', 'Rs 600'], ['Extension Cord 5m', 'Rs 900'], ['Multi Plug', 'Rs 350'], ['LED Bulb 9W', 'Rs 200'], ['LED Bulb 18W', 'Rs 350'], ['LED Panel Light', 'Rs 1,200'], ['Tube Light (LED)', 'Rs 500'], ['Energy Saver', 'Rs 400'], ['Wire (Per Meter)', 'Rs 30'], ['Tape (Electrical)', 'Rs 100'], ['Fuses & MCBs', 'Rs 250'], ['Doorbell', 'Rs 800']
-    ]},
-    computer: { icon: '💻', name: 'Computer Accessories', items: [
-      ['Wireless Keyboard', 'Rs 2,000'], ['Wired Keyboard', 'Rs 800'], ['Wireless Mouse', 'Rs 1,500'], ['Wired Mouse', 'Rs 500'], ['USB Hub 4 Port', 'Rs 600'], ['USB Flash Drive 32GB', 'Rs 1,200'], ['USB Flash Drive 64GB', 'Rs 2,000'], ['External HDD 1TB', 'Rs 8,000'], ['External HDD 2TB', 'Rs 12,000'], ['Computer Speakers', 'Rs 2,500'], ['Webcam HD', 'Rs 3,000'], ['Laptop Stand', 'Rs 2,000'], ['Laptop Bag', 'Rs 1,800'], ['Cooling Pad', 'Rs 2,500']
-    ]},
-    cooling: { icon: '🌀', name: 'Cooling & Heating', items: [
-      ['Pedestal Fan (Local)', 'Rs 4,500'], ['Pedestal Fan (Imported)', 'Rs 7,000'], ['Ceiling Fan', 'Rs 5,500'], ['Exhaust Fan', 'Rs 3,000'], ['Room Heater (Small)', 'Rs 3,500'], ['Room Heater (Large)', 'Rs 6,000'], ['Oil Heater', 'Rs 8,000'], ['Air Cooler (Desert)', 'Rs 15,000'], ['Air Cooler (Tower)', 'Rs 22,000'], ['Fan Regulator', 'Rs 400']
-    ]},
-    repair: { icon: '🔧', name: 'Repair Services', items: [
-      ['Mobile Screen Replacement', 'Starts Rs 1,500'], ['Mobile Battery Replacement', 'Starts Rs 800'], ['Charging Port Repair', 'Starts Rs 500'], ['Mobile Software Issue', 'Starts Rs 500'], ['LED TV Repair', 'Starts Rs 1,000'], ['Fan/Motor Repair', 'Starts Rs 300'], ['Microwave Repair', 'Starts Rs 800'], ['Iron Repair', 'Starts Rs 400'], ['Computer/Laptop Repair', 'Starts Rs 1,000'], ['UPS/Inverter Repair', 'Starts Rs 1,500'], ['Free Inspection', 'Free']
-    ]}
-  };
+  const allProducts = [
+    { cat: 'appliances', catLabel: 'Appliances', name: 'LED TV 32 Inch', price: 32000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'LED TV 43 Inch', price: 55000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'LED TV 55 Inch', price: 85000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Electric Iron', price: 1500, img: 'https://images.unsplash.com/photo-1583946099346-e195d2b3a5d4?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Steam Iron', price: 2500, img: 'https://images.unsplash.com/photo-1583946099346-e195d2b3a5d4?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Microwave Oven', price: 18000, img: 'https://images.unsplash.com/photo-1574297500205-7d6465a3d96e?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Electric Kettle', price: 1800, img: 'https://images.unsplash.com/photo-1578262877865-0c26a13fee9a?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Toaster', price: 3000, img: 'https://images.unsplash.com/photo-1586974730628-8f7fa6da6e98?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Blender / Juicer', price: 4500, img: 'https://images.unsplash.com/photo-1597931946405-0c24863f6e3f?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Vacuum Cleaner', price: 12000, img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Rice Cooker', price: 5500, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31a?w=300&q=80' },
+    { cat: 'appliances', catLabel: 'Appliances', name: 'Electric Heater', price: 6000, img: 'https://images.unsplash.com/photo-1611721822655-f022f9fe44c0?w=300&q=80' },
 
-  let currentCat = 'appliances';
-  const section = document.getElementById('menuSection');
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Mobile Charger (Original)', price: 500, img: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Fast Charger', price: 1200, img: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Wireless Charger', price: 2500, img: 'https://images.unsplash.com/photo-1622043175543-544a0ab3a450?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Bluetooth Earphones', price: 1800, img: 'https://images.unsplash.com/photo-1590658268037-6bf12f032f8d?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Wired Earphones', price: 400, img: 'https://images.unsplash.com/photo-1590658268037-6bf12f032f8d?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Power Bank 10,000mAh', price: 2500, img: 'https://images.unsplash.com/photo-1585338107529-1b141a784bae?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Power Bank 20,000mAh', price: 4500, img: 'https://images.unsplash.com/photo-1585338107529-1b141a784bae?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Mobile Cover (Simple)', price: 250, img: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Mobile Cover (Premium)', price: 800, img: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Screen Guard (Tempered)', price: 300, img: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'USB Data Cable', price: 200, img: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Selfie Stick', price: 600, img: 'https://images.unsplash.com/photo-1600086827875-a63b01f1335c?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Mobile Stand', price: 500, img: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&q=80' },
+    { cat: 'mobile', catLabel: 'Mobile', name: 'Car Mobile Holder', price: 800, img: 'https://images.unsplash.com/photo-1600086827875-a63b01f1335c?w=300&q=80' },
 
-  function renderCategory(cat) {
-    const data = menuData[cat];
-    if (!data) return;
-    currentCat = cat;
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Switches (Pia)', price: 120, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Sockets', price: 150, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Extension Cord 3m', price: 600, img: 'https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Extension Cord 5m', price: 900, img: 'https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Multi Plug', price: 350, img: 'https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'LED Bulb 9W', price: 200, img: 'https://images.unsplash.com/photo-1600090102231-5e0c7d929626?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'LED Bulb 18W', price: 350, img: 'https://images.unsplash.com/photo-1600090102231-5e0c7d929626?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'LED Panel Light', price: 1200, img: 'https://images.unsplash.com/photo-1600090102231-5e0c7d929626?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'LED Tube Light', price: 500, img: 'https://images.unsplash.com/photo-1600090102231-5e0c7d929626?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Energy Saver', price: 400, img: 'https://images.unsplash.com/photo-1600090102231-5e0c7d929626?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Wire (Per Meter)', price: 30, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Electrical Tape', price: 100, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Fuses & MCBs', price: 250, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
+    { cat: 'electrical', catLabel: 'Electrical', name: 'Doorbell', price: 800, img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80' },
 
-    let html = `<div class="cat-header"><span>${data.icon}</span><h2>${data.name}</h2><span class="count">${data.items.length} items</span></div><div class="menu-items">`;
-    data.items.forEach(item => {
-      html += `<div class="menu-item"><span class="name">${item[0]}</span><span class="dots"></span><span class="price">${item[1]}</span>`;
-      if (item[2]) html += `<span class="desc">${item[2]}</span>`;
-      html += `</div>`;
-    });
-    html += `</div>`;
-    section.innerHTML = html;
+    { cat: 'computer', catLabel: 'Computer', name: 'Wireless Keyboard', price: 2000, img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Wired Keyboard', price: 800, img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Wireless Mouse', price: 1500, img: 'https://images.unsplash.com/photo-1605773527852-c546a8584ea3?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Wired Mouse', price: 500, img: 'https://images.unsplash.com/photo-1605773527852-c546a8584ea3?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'USB Hub 4 Port', price: 600, img: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'USB Flash Drive 32GB', price: 1200, img: 'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'USB Flash Drive 64GB', price: 2000, img: 'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'External HDD 1TB', price: 8000, img: 'https://images.unsplash.com/photo-1531492746076-161ca9fbc0ec?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'External HDD 2TB', price: 12000, img: 'https://images.unsplash.com/photo-1531492746076-161ca9fbc0ec?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Computer Speakers', price: 2500, img: 'https://images.unsplash.com/photo-1545454672-353df3b9a94c?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Webcam HD', price: 3000, img: 'https://images.unsplash.com/photo-1587826080706-672a2f08f1b5?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Laptop Stand', price: 2000, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Laptop Bag', price: 1800, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&q=80' },
+    { cat: 'computer', catLabel: 'Computer', name: 'Cooling Pad', price: 2500, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&q=80' },
+
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Pedestal Fan (Local)', price: 4500, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Pedestal Fan (Imported)', price: 7000, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Ceiling Fan', price: 5500, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Exhaust Fan', price: 3000, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Room Heater (Small)', price: 3500, img: 'https://images.unsplash.com/photo-1611721822655-f022f9fe44c0?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Room Heater (Large)', price: 6000, img: 'https://images.unsplash.com/photo-1611721822655-f022f9fe44c0?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Oil Heater', price: 8000, img: 'https://images.unsplash.com/photo-1611721822655-f022f9fe44c0?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Desert Air Cooler', price: 15000, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Tower Air Cooler', price: 22000, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+    { cat: 'cooling', catLabel: 'Cooling', name: 'Fan Regulator', price: 400, img: 'https://images.unsplash.com/photo-1595246140625-573b715d11a8?w=300&q=80' },
+
+    { cat: 'repair', catLabel: 'Repair', name: 'Mobile Screen Replacement', price: 1500, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Mobile Battery Replacement', price: 800, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Charging Port Repair', price: 500, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Mobile Software Fix', price: 500, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'LED TV Repair', price: 1000, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Fan / Motor Repair', price: 300, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Microwave Repair', price: 800, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Iron Repair', price: 400, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Computer / Laptop Repair', price: 1000, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'UPS / Inverter Repair', price: 1500, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' },
+    { cat: 'repair', catLabel: 'Repair', name: 'Free Inspection', price: 0, img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300&q=80' }
+  ];
+
+  const grid = document.getElementById('productsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+  const resultsInfo = document.getElementById('resultsInfo');
+  const catTabs = document.querySelectorAll('.cat-tab');
+
+  let activeCat = 'all';
+
+  function formatPrice(p) {
+    if (p === 0) return 'Free';
+    return 'Rs ' + p.toLocaleString('en-PK');
   }
 
-  renderCategory('appliances');
+  function render() {
+    const query = searchInput.value.toLowerCase().trim();
+    const sort = sortSelect.value;
 
-  document.querySelectorAll('.menu-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const cat = tab.dataset.cat;
-      if (cat !== currentCat) {
-        document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        section.innerHTML = '<div style="text-align:center;padding:3rem;color:rgba(255,255,255,0.2);font-size:0.9rem;"><div style="font-size:3rem;margin-bottom:1rem;opacity:0.3;">⚡</div>Loading...</div>';
-        setTimeout(() => renderCategory(cat), 200);
+    let filtered = allProducts.filter(p => {
+      if (activeCat !== 'all' && p.cat !== activeCat) return false;
+      if (query && !p.name.toLowerCase().includes(query) && !p.catLabel.toLowerCase().includes(query)) return false;
+      return true;
+    });
+
+    filtered.sort((a, b) => {
+      switch (sort) {
+        case 'name-asc': return a.name.localeCompare(b.name);
+        case 'name-desc': return b.name.localeCompare(a.name);
+        case 'price-asc': return a.price - b.price;
+        case 'price-desc': return b.price - a.price;
+        default: return 0;
       }
     });
+
+    resultsInfo.textContent = filtered.length + ' item' + (filtered.length !== 1 ? 's' : '');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="no-results"><i class="fas fa-search"></i><p>No products found matching "<strong>${query}</strong>"</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(p => `
+      <div class="product-card" style="animation-delay:${Math.random() * 0.15}s">
+        <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy" />
+        <div class="product-info">
+          <div class="product-cat-badge">${p.catLabel}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">${formatPrice(p.price)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  searchInput.addEventListener('input', render);
+  sortSelect.addEventListener('change', render);
+
+  catTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      catTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeCat = tab.dataset.cat;
+      render();
+    });
   });
+
+  render();
 </script>
 </body>
 </html>
