@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://madnielectronicsjhang.github.io/madnielectronicsjhang/sitemap.xml
+Sitemap: https://madnielectronicsjhang.github.io/shop/sitemap.xml
